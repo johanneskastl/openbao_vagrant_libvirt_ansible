@@ -108,7 +108,7 @@ openbao read database/roles/vagrant-libvirt-role
 openbao read database/creds/vagrant-libvirt-role
 
 # replace XXX with the user from the last command
-psql -h 192.0.2.14 -d vault-example-database -U XXX
+psql -h 192.0.2.14 -d openbao-example-database -U XXX
 ```
 
 This will allow you to get a new set of database credentials from OpenBao via
