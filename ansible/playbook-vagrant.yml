@@ -26,9 +26,6 @@
 - name: 'Run playbook-server-install_openbao-server.yml'
   ansible.builtin.import_playbook: playbook-server-install_openbao-server.yml
 
-- name: 'Run playbook-client-install_openbao-agent.yml'
-  ansible.builtin.import_playbook: playbook-client-install_openbao-agent.yml
-
 - name: 'Run playbook-server-configure_and_start_openbao_server.yml'
   ansible.builtin.import_playbook: playbook-server-configure_and_start_openbao_server.yml
 
@@ -38,6 +35,9 @@
 #
 # OpenBao client VM
 #
+
+- name: 'Run playbook-client-install_openbao-agent.yml'
+  ansible.builtin.import_playbook: playbook-client-install_openbao-agent.yml
 
 - name: 'Run playbook-client-install_and_start_nginx.yml'
   ansible.builtin.import_playbook: playbook-client-install_and_start_nginx.yml
