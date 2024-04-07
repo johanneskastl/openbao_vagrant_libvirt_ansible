@@ -1,0 +1,34 @@
+---
+
+- name: 'Run playbook-all_nodes-create_a_vimrc.yml'
+  ansible.builtin.import_playbook: playbook-all_nodes-create_a_vimrc.yml
+
+- name: 'Run playbook-all_nodes-install_tmux.yml'
+  ansible.builtin.import_playbook: playbook-all_nodes-install_tmux.yml
+
+- name: 'Run playbook-all_nodes-minimal_tmux_configuration.yml'
+  ansible.builtin.import_playbook: playbook-all_nodes-minimal_tmux_configuration.yml
+
+- name: 'Run playbook-all_nodes-minimal_bashrc.yml'
+  ansible.builtin.import_playbook: playbook-all_nodes-minimal_bashrc.yml
+
+- name: 'Run playbook-all_nodes-add_Branch_Security_repo.yml'
+  ansible.builtin.import_playbook: playbook-all_nodes-add_Branch_Security_repo.yml
+
+- name: 'Run playbook-server-install_openbao-server.yml'
+  ansible.builtin.import_playbook: playbook-server-install_openbao-server.yml
+
+- name: 'Run playbook-client-install_openbao-agent.yml'
+  ansible.builtin.import_playbook: playbook-client-install_openbao-agent.yml
+
+- name: 'Run playbook-server-configure_and_start_openbao_server.yml'
+  ansible.builtin.import_playbook: playbook-server-configure_and_start_openbao_server.yml
+
+- name: 'Run playbook-server-add_entries_to_openbao_server.yml'
+  ansible.builtin.import_playbook: playbook-server-add_entries_to_openbao_server.yml
+
+- name: 'Run playbook-client-install_and_start_nginx.yml'
+  ansible.builtin.import_playbook: playbook-client-install_and_start_nginx.yml
+
+- name: 'Run playbook-client-configure_and_start_openbao_agent.yml'
+  ansible.builtin.import_playbook: playbook-client-configure_and_start_openbao_agent.yml
