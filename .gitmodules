@@ -31,3 +31,6 @@
 [submodule "ansible/roles/johanneskastl.install_and_start_postgresql"]
 	path = ansible/roles/johanneskastl.install_and_start_postgresql
 	url = https://github.com/johanneskastl/ansible-role-install_and_start_postgresql.git
+[submodule "ansible/roles/johanneskastl.configure_a_postgresql_database"]
+	path = ansible/roles/johanneskastl.configure_a_postgresql_database
+	url = https://github.com/johanneskastl/ansible-role-configure_a_postgresql_database.git
