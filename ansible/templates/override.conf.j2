@@ -1,0 +1,4 @@
+[Service]
+WorkingDirectory=/var/lib/openbao/
+ExecStart=
+ExecStart=/usr/bin/openbao server -dev -dev-listen-address={{ ansible_default_ipv4['address'] }}:8200
