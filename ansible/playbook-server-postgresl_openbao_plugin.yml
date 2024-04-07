@@ -1,0 +1,26 @@
+---
+- name: 'Gather facts'
+  hosts: 'all'
+  gather_facts: true
+  become: true
+
+- name: 'Postgresql stuff'
+  hosts: 'openbao'
+  gather_facts: true
+  become: true
+
+  tasks:
+
+    - name: 'Install postgresql client tools'
+      ansible.builtin.package:
+        name:
+          - 'openbao-postgresql-database-plugin'
+          - 'postgresql16'
+
+    - name: 'Prepare snippet with OpenBao Postgres commands'
+      ansible.builtin.template:
+        src: 'postgresql_openbao_snippet.txt.j2'
+        dest: '/root/postgresql_openbao_snippet.txt'
+        owner: 'root'
+        group: 'root'
+        mode: '0644'
