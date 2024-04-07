@@ -1,0 +1,44 @@
+---
+- name: 'Install, configure and start a PostgreSQL database'
+  hosts: 'openbao-client'
+  gather_facts: true
+  become: true
+
+  pre_tasks:
+
+    - name: 'Install ACL package to work around "temporary files" errors'
+      ansible.builtin.package:
+        name: 'acl'
+        state: 'present'
+
+  roles:
+
+    - role: 'johanneskastl.install_and_start_postgresql'
+      only_listen_on_localhost: false
+      postgresql_superuser_password: 'totallysecurepassword'
+    - role: 'johanneskastl.configure_a_postgresql_database'
+      postgresql_login_user: 'postgres'
+      postgresql_login_password: 'totallysecurepassword'
+      postgresql_database_name: 'openbao-example-database'
+      postgresql_user_name: 'example-user'
+      postgresql_user_password: 'anothertotallysecurepassword'
+
+  post_tasks:
+
+    - name: 'Allow connections for all user from everywhere'
+      community.postgresql.postgresql_pg_hba:
+        dest: '/var/lib/pgsql/data/pg_hba.conf'
+        contype: 'host'
+        users: 'all'
+        source: '0.0.0.0/0'
+        databases: 'all'
+        method: 'scram-sha-256'
+      notify:
+        - 'Restart postgresql'
+
+  handlers:
+
+    - name: 'Restart postgresql'
+      ansible.builtin.service:
+        name: 'postgresql.service'
+        state: 'restarted'
