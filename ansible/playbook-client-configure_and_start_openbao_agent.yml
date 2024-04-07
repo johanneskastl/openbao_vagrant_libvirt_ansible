@@ -1,0 +1,112 @@
+---
+- name: 'Gather facts'
+  hosts: 'all'
+  gather_facts: true
+
+- name: 'Configure and start openbao agent'
+  hosts: 'openbao-client'
+  gather_facts: true
+  become: true
+
+  pre_tasks:
+
+    - name: 'Fetch OpenBao root token from local file'
+      ansible.builtin.slurp:
+        src: 'openbao_root_token'
+      register: slurp_openbao_token
+      delegate_to: 'localhost'
+      become: false
+
+    - name: 'Set fact for the OpenBao root token'
+      ansible.builtin.set_fact:
+        openbao_root_token: "{{ slurp_openbao_token.content | b64decode }}"
+
+  tasks:
+
+    - name: 'Add environment variable to /root/.profile'
+      ansible.builtin.lineinfile:
+        path: '/root/.profile'
+        regexp: '^export VAULT_ADDR'
+        line: "export VAULT_ADDR='http://{{ hostvars['openbao']['ansible_default_ipv4']['address'] }}:8200'"
+        create: true
+        owner: 'root'
+        group: 'root'
+        mode: '0644'
+
+    - name: 'Add environment variable to /home/vagrant/.profile'
+      ansible.builtin.lineinfile:
+        path: '/home/vagrant/.profile'
+        regexp: '^export VAULT_ADDR'
+        line: "export VAULT_ADDR='http://{{ hostvars['openbao']['ansible_default_ipv4']['address'] }}:8200'"
+        create: true
+        owner: 'vagrant'
+        group: 'vagrant'
+        mode: '0644'
+
+    - name: 'Set permissions for openbao user on directory/srv/www/htdocs/'
+      ansible.builtin.file:
+        path: '/srv/www/htdocs/'
+        owner: 'openbao'
+        group: 'openbao'
+        mode: '0755'
+
+    - name: 'Manage openbao user (add home directory)'
+      ansible.builtin.user:
+        name: 'openbao'
+        home: '/var/lib/openbao/'
+        create_home: true
+
+    - name: 'Create the .vault-token file'
+      ansible.builtin.copy:
+        dest: '/var/lib/openbao/.vault-token'
+        content: "{{ openbao_root_token }}"
+        owner: 'openbao'
+        group: 'openbao'
+        mode: '0600'
+      notify:
+        - 'Restart openbao-agent.service'
+
+    - name: 'Create /etc/openbao/openbao-agent.hcl'
+      ansible.builtin.template:
+        src: 'openbao-agent.hcl.j2'
+        dest: '/etc/openbao/openbao-agent.hcl'
+        owner: 'openbao'
+        group: 'openbao'
+        mode: '0644'
+      notify:
+        - 'Restart openbao-agent.service'
+
+    - name: 'Create /etc/openbao/nginx.tmpl'
+      ansible.builtin.template:
+        src: 'nginx.tmpl.j2'
+        dest: '/etc/openbao/nginx.tmpl'
+        owner: 'openbao'
+        group: 'openbao'
+        mode: '0644'
+      notify:
+        - 'Restart openbao-agent.service'
+
+    - name: 'Start openbao-agent.service'
+      ansible.builtin.service:
+        name: 'openbao-agent.service'
+        state: 'started'
+        enabled: false
+
+    - name: 'Print OpenBao root token'
+      ansible.builtin.debug:
+        msg: "The OpenBao root token is: {{ slurp_openbao_token.content | b64decode }}"
+
+    - name: 'Output OpenBao URL'
+      ansible.builtin.debug:
+        msg: "The OpenBao Server is reachable at: http://{{ hostvars['openbao']['ansible_default_ipv4']['address'] }}:8200"
+
+    - name: 'Output URL'
+      ansible.builtin.debug:
+        msg: "The website containing the 'secret' from OpenBao is reachable at http://{{ ansible_default_ipv4['address'] }}"
+
+  handlers:
+
+    - name: 'Restart openbao-agent.service'
+      ansible.builtin.service:
+        name: 'openbao-agent.service'
+        state: 'restarted'
