@@ -1,0 +1,25 @@
+
+openbao secrets enable database
+
+openbao write database/config/vagrant-libvirt-postgresql-database \
+    plugin_name="postgresql-database-plugin" \
+    allowed_roles="vagrant-libvirt-role" \
+    connection_url="postgresql://{{ '{{' }}username{{ '}}' }}:{{ '{{' }}password{{ '}}' }}@{{ hostvars['openbao-client']['ansible_default_ipv4']['address'] }}:5432/openbao-example-database" \
+    username="postgres" \
+    password="totallysecurepassword" \
+    password_authentication="scram-sha-256"
+
+openbao write database/roles/vagrant-libvirt-role \
+    db_name="vagrant-libvirt-postgresql-database" \
+    creation_statements="CREATE ROLE \"{{ '{{' }}name{{ '}}' }}\" WITH LOGIN PASSWORD '{{ '{{' }}password{{ '}}' }}' VALID UNTIL '{{ '{{' }}expiration{{ '}}' }}'; \
+        GRANT SELECT ON ALL TABLES IN SCHEMA public TO \"{{ '{{' }}name{{ '}}' }}\";" \
+    default_ttl="1h" \
+    max_ttl="24h"
+
+openbao read database/config/vagrant-libvirt-postgresql-database
+openbao read database/roles/vagrant-libvirt-role
+
+openbao read database/creds/vagrant-libvirt-role
+
+# replace XXX with the user from the last command
+psql -h {{ hostvars['openbao-client']['ansible_default_ipv4']['address'] }} -d openbao-example-database -U XXX
