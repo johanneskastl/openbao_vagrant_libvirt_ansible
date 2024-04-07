@@ -4,7 +4,7 @@
 
 <h1>openbao_vagrant_libvirt_ansible</h1>
 {{ '{{' }} with secret "secret/data/foo" {{ '}}' }}
-<p>The secret stored in Vault is: {{ '{{' }} .Data.data.test {{ '}}' }}</p>
+<p>The secret stored in OpenBao is: {{ '{{' }} .Data.data.test {{ '}}' }}</p>
 {{ '{{' }} end {{ '}}' }}
 
 </body>
