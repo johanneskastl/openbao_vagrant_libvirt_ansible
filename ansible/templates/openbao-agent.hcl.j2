@@ -1,0 +1,23 @@
+vault {
+   address = "http://{{ hostvars['openbao']['ansible_default_ipv4']['address'] }}:8200"
+   tls_skip_verify = true
+}
+
+auto_auth {
+   method {
+      type = "token_file"
+      config = {
+         token_file_path = "/var/lib/openbao/.vault-token"
+      }
+   }
+   sink "file" {
+      config = {
+            path = "/var/lib/openbao/openbao-token-via-agent"
+      }
+   }
+}
+
+template {
+  source      = "/etc/openbao/nginx.tmpl"
+  destination = "/srv/www/htdocs/index.html"
+}
