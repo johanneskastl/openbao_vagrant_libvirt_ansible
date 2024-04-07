@@ -28,3 +28,6 @@
 [submodule "ansible/roles/johanneskastl.zypper_ref_accept_keys"]
 	path = ansible/roles/johanneskastl.zypper_ref_accept_keys
 	url = https://github.com/johanneskastl/ansible-role-zypper_ref_accept_keys.git
+[submodule "ansible/roles/johanneskastl.install_and_start_postgresql"]
+	path = ansible/roles/johanneskastl.install_and_start_postgresql
+	url = https://github.com/johanneskastl/ansible-role-install_and_start_postgresql.git
