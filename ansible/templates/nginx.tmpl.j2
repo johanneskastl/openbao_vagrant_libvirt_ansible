@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>openbao_vagrant_libvirt_ansible</h1>
+{{ '{{' }} with secret "secret/data/foo" {{ '}}' }}
+<p>The secret stored in Vault is: {{ '{{' }} .Data.data.test {{ '}}' }}</p>
+{{ '{{' }} end {{ '}}' }}
+
+</body>
+</html>
