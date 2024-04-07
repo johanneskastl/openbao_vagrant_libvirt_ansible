@@ -45,5 +45,8 @@
 - name: 'Run playbook-client-install_and_start_nginx.yml'
   ansible.builtin.import_playbook: playbook-client-install_and_start_nginx.yml
 
+- name: 'Run playbook-client-postgresql_database.yml'
+  ansible.builtin.import_playbook: playbook-client-postgresql_database.yml
+
 - name: 'Run playbook-client-configure_and_start_openbao_agent.yml'
   ansible.builtin.import_playbook: playbook-client-configure_and_start_openbao_agent.yml
