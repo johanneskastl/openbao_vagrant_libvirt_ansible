@@ -3,3 +3,6 @@
 #
 .vagrant
 Vagrantfile.1
+
+# OpenBao root token
+ansible/openbao_root_token
