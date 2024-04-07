@@ -1,5 +1,9 @@
 ---
 
+#
+# general configuration
+#
+
 - name: 'Run playbook-all_nodes-create_a_vimrc.yml'
   ansible.builtin.import_playbook: playbook-all_nodes-create_a_vimrc.yml
 
@@ -15,6 +19,10 @@
 - name: 'Run playbook-all_nodes-add_Branch_Security_repo.yml'
   ansible.builtin.import_playbook: playbook-all_nodes-add_Branch_Security_repo.yml
 
+#
+# OpenBao server
+#
+
 - name: 'Run playbook-server-install_openbao-server.yml'
   ansible.builtin.import_playbook: playbook-server-install_openbao-server.yml
 
@@ -26,6 +34,10 @@
 
 - name: 'Run playbook-server-add_entries_to_openbao_server.yml'
   ansible.builtin.import_playbook: playbook-server-add_entries_to_openbao_server.yml
+
+#
+# OpenBao client VM
+#
 
 - name: 'Run playbook-client-install_and_start_nginx.yml'
   ansible.builtin.import_playbook: playbook-client-install_and_start_nginx.yml
