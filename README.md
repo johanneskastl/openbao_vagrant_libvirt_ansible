@@ -54,7 +54,7 @@ Server VM. Details can be found in the section on OpenBao and PostgreSQL below.
 
    <h1>openbao_vagrant_libvirt_ansible</h1>
 
-   <p>The secret stored in Vault is: vagrant-libvirt</p>
+   <p>The secret stored in OpenBao is: vagrant-libvirt</p>
 
 
    </body>
