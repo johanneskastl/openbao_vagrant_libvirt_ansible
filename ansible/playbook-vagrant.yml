@@ -32,6 +32,9 @@
 - name: 'Run playbook-server-add_entries_to_openbao_server.yml'
   ansible.builtin.import_playbook: playbook-server-add_entries_to_openbao_server.yml
 
+- name: 'Run playbook-server-postgresl_openbao_plugin.yml'
+  ansible.builtin.import_playbook: playbook-server-postgresl_openbao_plugin.yml
+
 #
 # OpenBao client VM
 #
