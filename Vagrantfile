@@ -47,6 +47,11 @@ Vagrant.configure("2") do |config|
       ansible.playbook = "ansible/playbook-vagrant.yml"
     end # node.vm.provision
 
+    node.trigger.after :destroy do |trigger|
+      trigger.warn = "Removing ansible/openbao_root_token"
+      trigger.run = {inline: "rm -vf ansible/openbao_root_token"}
+    end
+
   end # config.vm.define
 
 end # Vagrant.configure
