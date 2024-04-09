@@ -20,7 +20,7 @@
       postgresql_login_user: 'postgres'
       postgresql_login_password: 'totallysecurepassword'
       postgresql_database_name: 'openbao-example-database'
-      postgresql_user_name: 'example-user'
+      postgresql_user_name: 'openbao-user'
       postgresql_user_password: 'anothertotallysecurepassword'
 
   post_tasks:
