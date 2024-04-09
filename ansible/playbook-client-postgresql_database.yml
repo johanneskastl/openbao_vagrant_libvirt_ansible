@@ -15,8 +15,12 @@
 
     - role: 'johanneskastl.install_and_start_postgresql'
       only_listen_on_localhost: false
+      # The password should of course be encrypted in Ansible Vault,
+      # not in cleartext in a playbook...
       postgresql_superuser_password: 'totallysecurepassword'
     - role: 'johanneskastl.configure_a_postgresql_database'
+      # The passwords should of course be encrypted in Ansible Vault,
+      # not in cleartext in a playbook...
       postgresql_login_user: 'postgres'
       postgresql_login_password: 'totallysecurepassword'
       postgresql_database_name: 'openbao-example-database'
