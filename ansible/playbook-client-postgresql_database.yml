@@ -26,6 +26,7 @@
       postgresql_database_name: 'openbao-example-database'
       postgresql_user_name: 'openbao-user'
       postgresql_user_password: 'anothertotallysecurepassword'
+      postgresql_user_role_attr_flags: 'SUPERUSER,CREATEROLE,CREATEDB'
 
   post_tasks:
 
