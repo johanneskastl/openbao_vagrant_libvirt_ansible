@@ -91,8 +91,8 @@ openbao write database/config/vagrant-libvirt-postgresql-database \
     plugin_name="postgresql-database-plugin" \
     allowed_roles="vagrant-libvirt-role" \
     connection_url="postgresql://{{username}}:{{password}}@192.0.2.14:5432/openbao-example-database" \
-    username="postgres" \
-    password="totallysecurepassword" \
+    username="openbao-user" \
+    password="anothertotallysecurepassword" \
     password_authentication="scram-sha-256"
 
 openbao write database/roles/vagrant-libvirt-role \
