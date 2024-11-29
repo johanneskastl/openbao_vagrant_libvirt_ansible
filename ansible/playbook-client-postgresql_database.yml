@@ -11,6 +11,11 @@
         name: 'acl'
         state: 'present'
 
+    - name: 'Install the python311-psycopg2 package'
+      ansible.builtin.package:
+        name: 'python311-psycopg2'
+        state: 'present'
+
   roles:
 
     - role: 'johanneskastl.install_and_start_postgresql'
