@@ -103,6 +103,14 @@
       ansible.builtin.debug:
         msg: "The OpenBao root token is: {{ slurp_openbao_token.content | b64decode }}"
 
+    - name: 'Wait until the OpenBao URL is reachable'
+      ansible.builtin.uri:
+        url: "http://{{ hostvars['openbao']['ansible_default_ipv4']['address'] }}:8200"
+      register: result
+      until: "result.status == 200"
+      retries: 11
+      delay: 10
+
   handlers:
 
     - name: 'Restart openbao.service'
